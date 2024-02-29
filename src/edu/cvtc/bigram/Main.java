@@ -162,6 +162,8 @@ public class Main {
         "INSERT INTO bigrams (words_id, next_words_id) VALUES ({0}, {1})",
         w0, w1);
     command.execute(query);
+
+
   } // end of addBigram
 
   // Returns the ID of the provided word. Words must consist of non-whitespace
@@ -196,3 +198,7 @@ public class Main {
     return result;
   } // end of getId
 }
+
+// I cannot find bugs at this moment in time. It seems like the code is working, but I
+// know that there is still bugs in there, because I havn't changed anything yet. I'll
+// have to go and rewatch the video and lessons to continue this.
