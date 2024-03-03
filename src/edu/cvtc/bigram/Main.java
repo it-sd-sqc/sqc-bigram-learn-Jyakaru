@@ -134,13 +134,12 @@ public class Main {
     if (db == null || db.isClosed() || src == null) {
       return;
     }
-
     Scanner scanner = new Scanner(src);
     if (!scanner.hasNext()) {
       return;
     }
 
-    int w0 = getId(db, scanner.next());
+    int w0 = getId(db, scanner.next()); // .next divides by whitespaces check. The scanner.next might fail upon new line character
     while (scanner.hasNext()) {
       int w1 = getId(db, scanner.next());
       addBigram(db, w0, w1);
@@ -153,7 +152,7 @@ public class Main {
   // efficiency; as such, they are only required to be greater than zero.
   // Use getId() to identify a word's ID in the provided database.
   public static void addBigram(Connection db, int w0, int w1) throws SQLException {
-    if (db == null || db.isClosed() || w0 < 1 || w1 < 1) {
+    if (db == null || db.isClosed() || w0 < 1 || w1 < 1) { // check to see if it fails upon being <0 because the index of the DB might start at 0 not 1
       return;
     }
 
@@ -198,7 +197,3 @@ public class Main {
     return result;
   } // end of getId
 }
-
-// I cannot find bugs at this moment in time. It seems like the code is working, but I
-// know that there is still bugs in there, because I havn't changed anything yet. I'll
-// have to go and rewatch the video and lessons to continue this.
