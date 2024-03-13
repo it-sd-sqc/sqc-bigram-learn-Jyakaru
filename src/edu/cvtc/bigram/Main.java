@@ -8,6 +8,7 @@ import java.text.MessageFormat;
 import java.util.ArrayList;
 import java.util.Scanner;
 
+
 public class Main {
   // Constants ////////////////////////////////////////////////////////////////
   public static final String DATABASE_NAME = "bigrams";
@@ -21,6 +22,7 @@ public class Main {
   // Entry point //////////////////////////////////////////////////////////////
   public static void main(String[] args) {
     ArrayList<Path> toProcess = new ArrayList<>();
+    toProcess.add(Path.of("./sample-texts/rinehart-tish.txt"));
     // Process arguments //////////////////////////////////////////////////////
     for (String arg : args) {
       switch (arg) {
@@ -33,7 +35,7 @@ public class Main {
           System.out.println(DESCRIPTION);
           System.out.println("""
               Usage:
-                java edu.cvtc.bigram.Main file […file]
+                java edu.cvtc.bigram.Main file [./sample-txt/green-golden-slipper.txt]
               Arguments:
                 --version, -v
                   Displays the version number and exits.
@@ -41,8 +43,8 @@ public class Main {
                   Deletes the database if present to start with an empty database.
                 --help, -h
                   Displays argument help and exits.
-                file
-                  Specifies a path from which to extract bigrams.
+                
+                  java edu.cvtc.bigram.Main ./sample-texts/green-golden-slipper.txt
               """);
           return;
         }
@@ -139,7 +141,7 @@ public class Main {
       return;
     }
 
-    int w0 = getId(db, scanner.next()); // .next divides by whitespaces check. The scanner.next might fail upon new line character
+    int w0 = getId(db, scanner.next()); // .next divides by whitespaces check. The scanner.next might fail upon new line character \n
     while (scanner.hasNext()) {
       int w1 = getId(db, scanner.next());
       addBigram(db, w0, w1);
@@ -158,8 +160,7 @@ public class Main {
 
     Statement command = db.createStatement();
     String query = MessageFormat.format(
-        "INSERT INTO bigrams (words_id, next_words_id) VALUES ({0}, {1})",
-        w0, w1);
+        "INSERT INTO bigrams (words_id, next_words_id) VALUES ({0}, {1})", w0, w1);
     command.execute(query);
 
 
